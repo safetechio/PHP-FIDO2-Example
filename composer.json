@@ -1,0 +1,11 @@
+{
+  "require": {
+    "SAFETECHio/FIDO2_SERVER_Libraries": "dev-master"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url":  "git@github.com:SAFETECHio/FIDO2_SERVER_Libraries.git"
+    }
+  ]
+}
