@@ -1,6 +1,7 @@
 {
   "require": {
-    "SAFETECHio/FIDO2_SERVER_Libraries": "dev-master"
+    "SAFETECHio/FIDO2_SERVER_Libraries": "dev-master",
+    "filebase/filebase": "^1.0"
   },
   "repositories": [
     {
