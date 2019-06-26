@@ -62,7 +62,7 @@
 
           return navigator.credentials.create({
             publicKey: credentialCreationOptions.publicKey
-          })
+          });
         })
         .then((credential) => {
 
@@ -91,6 +91,7 @@
         })
         .catch((error) => {
           console.log(error);
+          console.log(error.message);
           alert("failed to register " + username)
         })
     }
