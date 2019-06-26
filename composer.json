@@ -1,7 +1,8 @@
 {
   "require": {
     "SAFETECHio/FIDO2_SERVER_Libraries": "dev-master",
-    "filebase/filebase": "^1.0"
+    "filebase/filebase": "^1.0",
+    "ramsey/uuid": "^3.8"
   },
   "repositories": [
     {
