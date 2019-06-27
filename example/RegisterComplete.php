@@ -18,9 +18,7 @@ try{
 
     // Complete Registration
     // find the registering user from your data store
-    $users = GetDBUsers();
-    $u = $users->get($_GET["username"]);
-    $user = WrapUser($u);
+    $user = User::FindOrFail($_GET["username"]);
 
     // Get the session data stored in the beginRegistration step
     session_start();
@@ -33,7 +31,7 @@ try{
     $credential = $WebA->completeRegistration($user, $sessionData, $jsonResponse);
 
     // If creation was successful, store the credential object
-    $user->WebAuthnSaveCredential($credential);
+    $user->SaveCredential($credential);
 
     // Destroy the registration session
     unset($_SESSION['registration_session']);

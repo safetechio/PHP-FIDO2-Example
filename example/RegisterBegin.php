@@ -4,7 +4,6 @@ require_once "../vendor/autoload.php";
 require_once "functions.php";
 
 use SAFETECHio\FIDO2\WebAuthn;
-use Ramsey\Uuid\Uuid;
 
 try{
     // TODO move init into main func file
@@ -20,19 +19,7 @@ try{
     // Begin Registration
 
     // create or find the registering user from your data store
-    $users = GetDBUsers();
-
-    // TODO IF username is null throw
-    $u = $users->get($_GET["username"]);
-    if($u->uuid == null){
-        $u->uuid = Uuid::uuid1()->toString();
-        $u->name = $_GET["username"];
-        $u->display_name = $_GET["username"];
-        $u->icon = "";
-        $u->save();
-    }
-
-    $user = WrapUser($u);
+    $user = User::FindOrCreate($_GET["username"]);
 
     /**
      * @var WebAuthn\Protocol\Options\CredentialCreation $options
