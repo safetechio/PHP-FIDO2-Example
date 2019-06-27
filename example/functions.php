@@ -37,10 +37,20 @@ function MakeJSONResponse($data, $status = 200)
         }
 
         /** @var Throwable $data */
+        // Remove objects from the trace because they can contain some complex JSON breaking data.
+        $traces = $data->getTrace();
+        foreach ($traces as $i => $trace){
+            foreach ($trace["args"] as $x => $arg) {
+                if(gettype($arg) == "object"){
+                    $traces[$i]["args"][$x] = "(object) " . get_class($arg);
+                }
+            }
+        }
+
         $out = [
             "error" => [
                 "message" => $data->getMessage(),
-                "trace" => $data->getTrace()
+                "trace" => $traces
             ]
         ];
         echo json_encode($out);
