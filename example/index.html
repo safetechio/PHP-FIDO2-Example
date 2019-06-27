@@ -70,21 +70,29 @@
           let clientDataJSON = credential.response.clientDataJSON;
           let rawId = credential.rawId;
 
-          $.post(
-            'RegisterFinish.php?username=' + username,
-            JSON.stringify({
+          let msg = JSON.stringify({
               id: credential.id,
               rawId: bufferEncode(rawId),
               type: credential.type,
               response: {
-                attestationObject: bufferEncode(attestationObject),
-                clientDataJSON: bufferEncode(clientDataJSON),
+                  attestationObject: bufferEncode(attestationObject),
+                  clientDataJSON: bufferEncode(clientDataJSON),
               },
-            }),
+          });
+
+          $.post(
+            'RegisterComplete.php?username=' + username,
+              msg,
             function (data) {
               return data
             },
             'json')
+              .catch((error) => {
+                  console.log(error);
+                  console.log(error.message);
+                  console.log(error.responseText);
+                  alert("failed to register " + username)
+              })
         })
         .then((success) => {
           alert("successfully registered " + username + "!");
@@ -92,6 +100,7 @@
         .catch((error) => {
           console.log(error);
           console.log(error.message);
+          console.log(error.responseText);
           alert("failed to register " + username)
         })
     }
