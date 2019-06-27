@@ -3,21 +3,53 @@
 <html>
 
 <head>
-  <title>FIDO2 Example</title>
+    <title>SAFETECHio FIDO2 Example</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
 
-  <p>Email:</p>
-  <input type="text" name="username" id="email" placeholder="i.e. name@example.com">
-  <br>
-  <button onclick="SafeTechWebAuthn.registerUser()">Register</button>
+<div class="container">
+    <br/>
+    <div class="jumbotron">
+        <h1 class="display-4 text-center">SAFETECHio FIDO2 / WebAuthn Example</h1>
+        <br/>
+        <h2>How to use:</h2>
+        <h3>Registration:</h3>
+        <p class="lead">
+            - Just enter an identifier for your test, we recommend using an email address as this is what most users will be identified with.<br/>
+            - Next press "Register" to begin the registration process.<br/>
+            - Follow the on screen registration instructions<br/>
+            - If you wish to view the data stored in the local DB go to <a href="http://localhost:8082/example/db/users/">the DB directory</a> and select the user you wish to view
+        </p>
 
-  <script src="js/jquery.min.js"></script>
-  <script src="js/WebAuthn.js"></script>
-  <script>
+        <h3>Authentication</h3>
+        <p class="lead">
+            - Details about authentication
+        </p>
+
+        <p class="lead"><b>For more details</b> about this example please visit the <a href="https://github.com/SAFETECHio/PHP-FIDO2-Example" target="_blank">GitHub repo</a>.</p>
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col-md-2">
+                <label for="email" class="col-12 col-form-label">Email :</label>
+            </div>
+            <div class="col-md-6">
+                <input class="form-control" type="text" name="username" id="email" placeholder="i.e. name@example.com">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary btn-block" onclick="SafeTechWebAuthn.registerUser()">Register</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/WebAuthn.js"></script>
+<script>
     SafeTechWebAuthn = new SAFETECHioWebAuthn(config);
-  </script>
-</body>
+</script>
 
+</body>
 </html>
