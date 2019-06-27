@@ -2,6 +2,7 @@
 
 require_once "../vendor/autoload.php";
 
+use \SAFETECHio\FIDO2\Tools\Tools;
 use \SAFETECHio\FIDO2\WebAuthn\Authenticator;
 use \SAFETECHio\FIDO2\WebAuthn\Contracts;
 use \SAFETECHio\FIDO2\WebAuthn\Credential;
@@ -34,14 +35,16 @@ class User implements Contracts\User {
     {
         $this->userDoc = $userDoc;
 
-        foreach ($userDoc as $id => $credential){
+        foreach ($userDoc->credentials as $id => $credential){
+            $credential = json_decode(json_encode($credential));
+
             $this->credentials[$id] = new Credential(
-                $credential->CredentialID,
-                $credential->CredentialPublicKey,
-                $credential->Format,
+                Tools::base64u_decode($credential->ID),
+                Tools::base64u_decode($credential->PublicKey),
+                $credential->AttestationType,
                 new Authenticator(
-                    $credential->authenticator->AAGUID,
-                    $credential->authenticator->Counter
+                    Tools::base64u_decode($credential->Authenticator->AAGUID),
+                    $credential->Authenticator->SignCount
                 )
             );
         }
@@ -73,6 +76,15 @@ class User implements Contracts\User {
     public function WebAuthnCredentials(): array
     {
         return $this->credentials;
+    }
+
+    public function WebAuthnSaveCredential(Credential $credential)
+    {
+        $this->userDoc->credentials[Tools::base64u_encode($credential->ID)] = $credential;
+
+        var_dump($this->userDoc);
+
+        $this->userDoc->save();
     }
 }
 
