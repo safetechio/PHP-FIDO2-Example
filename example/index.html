@@ -11,10 +11,13 @@
   <p>Email:</p>
   <input type="text" name="username" id="email" placeholder="i.e. name@example.com">
   <br>
-  <button onclick="registerUser()">Register</button>
+  <button onclick="SafeTechWebAuthn.registerUser()">Register</button>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/WebAuthn.js"></script>
+  <script>
+    SafeTechWebAuthn = new SAFETECHioWebAuthn(config);
+  </script>
 </body>
 
 </html>

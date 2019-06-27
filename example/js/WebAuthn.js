@@ -6,81 +6,97 @@ $(document).ready(function () {
     }
 });
 
-// Base64 to ArrayBuffer
-function bufferDecode(value) {
-    return Uint8Array.from(atob(value), c => c.charCodeAt(0));
+class SAFETECHioWebAuthnConfig {
+    registerBeginEndpoint;
+    registerCompleteEndpoint;
+    authenticateBeginEndpoint;
+    authenticateCompleteEndpoint;
 }
 
-// ArrayBuffer to URLBase64
-function bufferEncode(value) {
-    return btoa(String.fromCharCode.apply(null, new Uint8Array(value)))
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=/g, "");
-}
+let config = new SAFETECHioWebAuthnConfig();
+config.registerBeginEndpoint = "RegisterBegin.php?username=";
+config.registerCompleteEndpoint = "RegisterComplete.php?username=";
 
-function registerUser() {
+class SAFETECHioWebAuthn {
 
-    username = $("#email").val();
-    if (username === "") {
-        alert("Please enter a username");
-        return;
+    constructor(config) {
+        this.config = config;
     }
 
-    $.get(
-        'RegisterBegin.php?username=' + username,
-        null,
-        function (data) {
-            return data
-        },
-        'json')
-        .then((credentialCreationOptions) => {
+    // Base64 to ArrayBuffer
+    static bufferDecode(value) {
+        return Uint8Array.from(atob(value), c => c.charCodeAt(0));
+    }
 
-            credentialCreationOptions.publicKey.challenge = bufferDecode(credentialCreationOptions.publicKey.challenge);
-            credentialCreationOptions.publicKey.user.id = bufferDecode(credentialCreationOptions.publicKey.user.id);
-            if (credentialCreationOptions.publicKey.excludeCredentials) {
-                for (let i = 0; i < credentialCreationOptions.publicKey.excludeCredentials.length; i++) {
-                    credentialCreationOptions.publicKey.excludeCredentials[i].id = bufferDecode(credentialCreationOptions.publicKey.excludeCredentials[i].id);
+    // ArrayBuffer to URLBase64
+    static bufferEncode(value) {
+        return btoa(String.fromCharCode.apply(null, new Uint8Array(value)))
+            .replace(/\+/g, "-")
+            .replace(/\//g, "_")
+            .replace(/=/g, "");
+    }
+
+    registerUser() {
+
+        let username = $("#email").val();
+        if (username === "") {
+            alert("Please enter a username");
+            return;
+        }
+
+        $.get(
+            this.config.registerBeginEndpoint + username,
+            null,
+            function (data) {
+                return data
+            },
+            'json')
+            .then((credentialCreationOptions) => {
+
+                credentialCreationOptions.publicKey.challenge = SAFETECHioWebAuthn.bufferDecode(credentialCreationOptions.publicKey.challenge);
+                credentialCreationOptions.publicKey.user.id = SAFETECHioWebAuthn.bufferDecode(credentialCreationOptions.publicKey.user.id);
+                if (credentialCreationOptions.publicKey.excludeCredentials) {
+                    for (let i = 0; i < credentialCreationOptions.publicKey.excludeCredentials.length; i++) {
+                        credentialCreationOptions.publicKey.excludeCredentials[i].id = SAFETECHioWebAuthn.bufferDecode(credentialCreationOptions.publicKey.excludeCredentials[i].id);
+                    }
                 }
-            }
 
-            return navigator.credentials.create({
-                publicKey: credentialCreationOptions.publicKey
-            });
-        })
-        .then((credential) => {
+                return navigator.credentials.create({
+                    publicKey: credentialCreationOptions.publicKey
+                });
+            })
+            .then((credential) => {
 
-            let attestationObject = credential.response.attestationObject;
-            let clientDataJSON = credential.response.clientDataJSON;
-            let rawId = credential.rawId;
+                let attestationObject = credential.response.attestationObject;
+                let clientDataJSON = credential.response.clientDataJSON;
+                let rawId = credential.rawId;
 
-            let msg = JSON.stringify({
-                id: credential.id,
-                rawId: bufferEncode(rawId),
-                type: credential.type,
-                response: {
-                    attestationObject: bufferEncode(attestationObject),
-                    clientDataJSON: bufferEncode(clientDataJSON),
-                },
-            });
+                let msg = JSON.stringify({
+                    id: credential.id,
+                    rawId: SAFETECHioWebAuthn.bufferEncode(rawId),
+                    type: credential.type,
+                    response: {
+                        attestationObject: SAFETECHioWebAuthn.bufferEncode(attestationObject),
+                        clientDataJSON: SAFETECHioWebAuthn.bufferEncode(clientDataJSON),
+                    },
+                });
 
-            $.post(
-                'RegisterComplete.php?username=' + username,
-                msg,
-                function (data) {
-                    return data
-                },
-                'json')
-                .catch((error) => {
-                    console.log(JSON.parse(error.responseText));
-                    alert("failed to register " + username)
-                })
-        })
-        .then((success) => {
-            alert("successfully registered " + username + "!");
-        })
-        .catch((error) => {
-            console.log(JSON.parse(error.responseText));
-            alert("failed to register " + username)
-        })
+                return $.post(
+                    this.config.registerCompleteEndpoint + username,
+                    msg,
+                    function (data) {
+                        return data
+                    },
+                    'json'
+                )
+            })
+            .then((success) => {
+                alert("successfully registered " + username + "!");
+            })
+            .catch((error) => {
+                let err = JSON.parse(error.responseText);
+                console.log(err);
+                alert("failed to register '" + username + "'. \n error : " + err.error.message)
+            })
+    }
 }
