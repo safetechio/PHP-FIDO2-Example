@@ -6,6 +6,7 @@ require_once "functions.php";
 use SAFETECHio\FIDO2\WebAuthn;
 
 try{
+    // TODO move init into main func file
     // Init WebAuthn Server
     $WebAConfig = new WebAuthn\WebAuthnConfig(
         "SAFETECHio PHP FIDO2 Example",
@@ -40,5 +41,6 @@ try{
     // Respond with a success message
     WriteJSON("Registration Success");
 } catch (Throwable $exception) {
+    // TODO return JSON Error rather than var_dump
     var_dump($exception);
 }

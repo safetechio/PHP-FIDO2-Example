@@ -7,6 +7,7 @@ use SAFETECHio\FIDO2\WebAuthn;
 use Ramsey\Uuid\Uuid;
 
 try{
+    // TODO move init into main func file
     // Init WebAuthn Server
     $WebAConfig = new WebAuthn\WebAuthnConfig(
         "SAFETECHio PHP FIDO2 Example",
@@ -21,6 +22,7 @@ try{
     // create or find the registering user from your data store
     $users = GetDBUsers();
 
+    // TODO IF username is null throw
     $u = $users->get($_GET["username"]);
     if($u->uuid == null){
         $u->uuid = Uuid::uuid1()->toString();
@@ -46,5 +48,6 @@ try{
     // options->publicKey contains the registration options
     WriteJSON($options);
 } catch (Throwable $exception) {
+    // TODO return JSON Error rather than var_dump
     var_dump($exception);
 }

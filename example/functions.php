@@ -7,6 +7,7 @@ use \SAFETECHio\FIDO2\WebAuthn\Authenticator;
 use \SAFETECHio\FIDO2\WebAuthn\Contracts;
 use \SAFETECHio\FIDO2\WebAuthn\Credential;
 
+// TODO refactor all User related funcs into dedicated User class file, include DB connection in User also
 /**
  * @return \Filebase\Database
  * @throws \Filebase\Filesystem\FilesystemException
@@ -71,7 +72,7 @@ class User implements Contracts\User {
     }
 
     /**
-     * @return array
+     * @return Credential[]
      */
     public function WebAuthnCredentials(): array
     {
