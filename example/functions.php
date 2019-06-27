@@ -81,9 +81,6 @@ class User implements Contracts\User {
     public function WebAuthnSaveCredential(Credential $credential)
     {
         $this->userDoc->credentials[Tools::base64u_encode($credential->ID)] = $credential;
-
-        var_dump($this->userDoc);
-
         $this->userDoc->save();
     }
 }
