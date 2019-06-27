@@ -11,7 +11,7 @@ try{
     $WebAConfig = new WebAuthn\WebAuthnConfig(
         "SAFETECHio PHP FIDO2 Example",
         "localhost",
-        "http://localhost"
+        "http://localhost:8082"
         //"https://example.com/images/logo.png"
     );
     $WebA = new WebAuthn\WebAuthnServer($WebAConfig);
@@ -22,11 +22,13 @@ try{
     $users = GetDBUsers();
 
     $u = $users->get($_GET["username"]);
-    $u->uuid = Uuid::uuid1()->toString();
-    $u->name = $_GET["username"];
-    $u->display_name = $_GET["username"];
-    $u->icon = "";
-    $u->save();
+    if($u->uuid == null){
+        $u->uuid = Uuid::uuid1()->toString();
+        $u->name = $_GET["username"];
+        $u->display_name = $_GET["username"];
+        $u->icon = "";
+        $u->save();
+    }
 
     $user = WrapUser($u);
 
