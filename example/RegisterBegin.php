@@ -26,8 +26,7 @@ try{
 
     // respond with the options
     // options->publicKey contains the registration options
-    WriteJSON($options);
+    MakeJSONResponse($options);
 } catch (Throwable $exception) {
-    // TODO return JSON Error rather than var_dump
-    var_dump($exception);
+    MakeJSONResponse($exception);
 }

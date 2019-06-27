@@ -28,8 +28,7 @@ try{
     unset($_SESSION['registration_session']);
 
     // Respond with a success message
-    WriteJSON("Registration Success");
+    MakeJSONResponse("Registration Success");
 } catch (Throwable $exception) {
-    // TODO return JSON Error rather than var_dump
-    var_dump($exception);
+    MakeJSONResponse($exception);
 }

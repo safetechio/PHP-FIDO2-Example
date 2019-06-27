@@ -24,9 +24,29 @@ function InitWebAuthn(WebAuthn\WebAuthnConfig $WebAConfig = null): WebAuthn\WebA
 
 /**
  * @param $data
+ * @param int $status
  */
-function WriteJSON($data)
+function MakeJSONResponse($data, $status = 200)
 {
+    header_remove();
     header('Content-type:application/json;charset=utf-8');
+
+    if(is_a($data, Throwable::class)){
+        if($status == 200){
+            http_response_code(400);
+        }
+
+        /** @var Throwable $data */
+        $out = [
+            "error" => [
+                "message" => $data->getMessage(),
+                "trace" => $data->getTrace()
+            ]
+        ];
+        echo json_encode($out);
+        return;
+    }
+
+    http_response_code($status);
     echo json_encode($data);
 }

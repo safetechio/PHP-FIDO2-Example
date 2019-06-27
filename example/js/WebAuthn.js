@@ -72,9 +72,7 @@ function registerUser() {
                 },
                 'json')
                 .catch((error) => {
-                    console.log(error);
-                    console.log(error.message);
-                    console.log(error.responseText);
+                    console.log(JSON.parse(error.responseText));
                     alert("failed to register " + username)
                 })
         })
@@ -82,9 +80,7 @@ function registerUser() {
             alert("successfully registered " + username + "!");
         })
         .catch((error) => {
-            console.log(error);
-            console.log(error.message);
-            console.log(error.responseText);
+            console.log(JSON.parse(error.responseText));
             alert("failed to register " + username)
         })
 }
