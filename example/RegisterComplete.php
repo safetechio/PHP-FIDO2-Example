@@ -3,18 +3,9 @@
 require_once "../vendor/autoload.php";
 require_once "functions.php";
 
-use SAFETECHio\FIDO2\WebAuthn;
-
 try{
-    // TODO move init into main func file
     // Init WebAuthn Server
-    $WebAConfig = new WebAuthn\WebAuthnConfig(
-        "SAFETECHio PHP FIDO2 Example",
-        "localhost",
-        "http://localhost:8082"
-    //"https://example.com/images/logo.png"
-    );
-    $WebA = new WebAuthn\WebAuthnServer($WebAConfig);
+    $WebA = InitWebAuthn();
 
     // Complete Registration
     // find the registering user from your data store
