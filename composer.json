@@ -1,4 +1,15 @@
 {
+  "name": "SAFETECHio/PHP-FIDO2-Example",
+  "description": "FIDO 2 / WebAuthn server and client library example usage for php",
+  "authors": [
+    {
+      "name": "Samuel Hawksby-Robinson",
+      "email": "samuel@samyoul.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {"": "./example"}
+  },
   "require": {
     "SAFETECHio/FIDO2_SERVER_Libraries": "dev-master",
     "filebase/filebase": "^1.0",
