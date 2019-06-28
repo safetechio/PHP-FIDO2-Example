@@ -1,5 +1,7 @@
 # SAFETECHio PHP FIDO2 Example
 
+![Example Home Page](./docs/images/home-page.png "Example Home Page")
+
 ## Libraries
 
 For details of the source libraries see [dedicated repo](https://github.com/SAFETECHio/FIDO2_SERVER_Libraries).
