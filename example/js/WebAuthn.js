@@ -6,16 +6,16 @@ $(document).ready(function () {
     }
 });
 
-class SAFETECHioWebAuthnConfig {
-    registerBeginEndpoint;
-    registerCompleteEndpoint;
-    authenticateBeginEndpoint;
-    authenticateCompleteEndpoint;
-}
 
-let config = new SAFETECHioWebAuthnConfig();
-config.registerBeginEndpoint = "RegisterBegin.php?username=";
-config.registerCompleteEndpoint = "RegisterComplete.php?username=";
+SAFETECHioWebAuthnConfig = {
+    registerBeginEndpoint: "",
+    registerCompleteEndpoint: "",
+    authenticateBeginEndpoint: "",
+    authenticateCompleteEndpoint: "",
+};
+
+SAFETECHioWebAuthnConfig.registerBeginEndpoint += "RegisterBegin.php?username=";
+SAFETECHioWebAuthnConfig.registerCompleteEndpoint += "RegisterComplete.php?username=";
 
 class SAFETECHioWebAuthn {
 
