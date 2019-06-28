@@ -94,6 +94,7 @@ class SAFETECHioWebAuthn {
                 alert("successfully registered " + username + "!");
             })
             .catch((error) => {
+                console.log(error);
                 let err = JSON.parse(error.responseText);
                 console.log(err);
                 alert("failed to register '" + username + "'. \n error : " + err.error.message)

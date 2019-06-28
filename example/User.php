@@ -5,6 +5,7 @@ use \SAFETECHio\FIDO2\Tools\Tools;
 use \SAFETECHio\FIDO2\WebAuthn\Authenticator;
 use \SAFETECHio\FIDO2\WebAuthn\Contracts;
 use \SAFETECHio\FIDO2\WebAuthn\Credential;
+use \SAFETECHio\FIDO2\WebAuthn\Protocol\Options\CredentialDescriptor;
 
 class User implements Contracts\User {
 
@@ -63,7 +64,7 @@ class User implements Contracts\User {
         $users = static::getDB();
         $u = $users->get($id);
         if($u->uuid == null){
-            $u->uuid = Uuid::uuid1()->toString();
+            $u->uuid = Uuid::uuid4()->toString();
             $u->name = $id;
             $u->display_name = $id;
             $u->icon = "";
@@ -139,7 +140,30 @@ class User implements Contracts\User {
      */
     public function WebAuthnCredentials(): array
     {
+        if (is_null($this->credentials)){
+            return [];
+        }
         return $this->credentials;
+    }
+
+    /**
+     * @return array
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredentialCreationOptions
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredentialCreationOptions/excludeCredentials
+     */
+    public function WebAuthnExcludeCredentials(): array
+    {
+        $out = [];
+
+        foreach ($this->WebAuthnCredentials() as $credential){
+            $cd = new CredentialDescriptor();
+            $cd->CredentialID = base64_encode($credential->ID);
+            $cd->Type = "public-key";
+
+            $out[] = $cd;
+        }
+
+        return $out;
     }
 
     /**

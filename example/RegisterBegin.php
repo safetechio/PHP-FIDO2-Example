@@ -18,7 +18,9 @@ try{
      * @var WebAuthn\Protocol\Options\CredentialCreation $options
      * @var WebAuthn\SessionData $sessionData
      */
-    list($options, $sessionData) = $WebA->BeginRegistration($user)->Make();
+    list($options, $sessionData) = $WebA->BeginRegistration($user)
+        ->WithExclusions($user->WebAuthnExcludeCredentials())
+        ->Make();
 
     // sessionData should be saved in the registration session
     session_start();
