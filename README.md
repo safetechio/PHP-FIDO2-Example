@@ -19,7 +19,7 @@ docker-composer up
 Open another separate terminal and enter the following commands
 
 ```bash
-docker exec -it fido2-app /bin/bash
+docker exec -it fido2-example /bin/bash
 cd app
 composer install
 ```
