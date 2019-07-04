@@ -148,6 +148,26 @@ class User implements Contracts\User {
 
     /**
      * @return array
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredentialRequestOptions
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredentialRequestOptions/allowCredentials
+     */
+    public function WebAuthnAllowedCredentials(): array
+    {
+        $out = [];
+
+        foreach ($this->WebAuthnCredentials() as $credential){
+            $cd = new CredentialDescriptor();
+            $cd->CredentialID = base64_encode($credential->ID);
+            $cd->Type = "public-key";
+
+            $out[] = $cd;
+        }
+
+        return $out;
+    }
+
+    /**
+     * @return array
      * @see https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredentialCreationOptions
      * @see https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredentialCreationOptions/excludeCredentials
      */

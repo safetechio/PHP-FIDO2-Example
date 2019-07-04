@@ -53,12 +53,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SAFETECHio/FIDO2_SERVER_Libraries.git",
-                "reference": "93b6eaa9d907703efdcec45ca99aa19277b26d54"
+                "reference": "4503a36289c2b5e4d7bfe4979e4522a2ad9f5649"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SAFETECHio/FIDO2_SERVER_Libraries/zipball/93b6eaa9d907703efdcec45ca99aa19277b26d54",
-                "reference": "93b6eaa9d907703efdcec45ca99aa19277b26d54",
+                "url": "https://api.github.com/repos/SAFETECHio/FIDO2_SERVER_Libraries/zipball/4503a36289c2b5e4d7bfe4979e4522a2ad9f5649",
+                "reference": "4503a36289c2b5e4d7bfe4979e4522a2ad9f5649",
                 "shasum": ""
             },
             "require": {
@@ -83,7 +83,7 @@
                 "source": "https://github.com/SAFETECHio/FIDO2_SERVER_Libraries/tree/master",
                 "issues": "https://github.com/SAFETECHio/FIDO2_SERVER_Libraries/issues"
             },
-            "time": "2019-06-28T00:55:17+00:00"
+            "time": "2019-07-03T15:17:31+00:00"
         },
         {
             "name": "filebase/filebase",
