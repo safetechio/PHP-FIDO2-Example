@@ -17,6 +17,7 @@ SAFETECHioWebAuthnConfig = {
 SAFETECHioWebAuthnConfig.registerBeginEndpoint += "RegisterBegin.php?username=";
 SAFETECHioWebAuthnConfig.registerCompleteEndpoint += "RegisterComplete.php?username=";
 SAFETECHioWebAuthnConfig.authenticateBeginEndpoint += "AuthenticateBegin.php?username=";
+SAFETECHioWebAuthnConfig.authenticateCompleteEndpoint += "AuthenticationComplete.php?username=";
 
 class SAFETECHioWebAuthn {
 
@@ -137,30 +138,35 @@ class SAFETECHioWebAuthn {
             let sig = assertion.response.signature;
             let userHandle = assertion.response.userHandle;
 
-            $.post(
+            let msg = JSON.stringify({
+                id: assertion.id,
+                rawId: SAFETECHioWebAuthn.bufferEncode(rawId),
+                type: assertion.type,
+                response: {
+                    authenticatorData: SAFETECHioWebAuthn.bufferEncode(authData),
+                    clientDataJSON: SAFETECHioWebAuthn.bufferEncode(clientDataJSON),
+                    signature: SAFETECHioWebAuthn.bufferEncode(sig),
+                    userHandle: SAFETECHioWebAuthn.bufferEncode(userHandle),
+                },
+            });
+
+            return $.post(
                 this.config.authenticateCompleteEndpoint + username,
-                JSON.stringify({
-                    id: assertion.id,
-                    rawId: SAFETECHioWebAuthn.bufferEncode(rawId),
-                    type: assertion.type,
-                    response: {
-                        authenticatorData: SAFETECHioWebAuthn.bufferEncode(authData),
-                        clientDataJSON: SAFETECHioWebAuthn.bufferEncode(clientDataJSON),
-                        signature: SAFETECHioWebAuthn.bufferEncode(sig),
-                        userHandle: SAFETECHioWebAuthn.bufferEncode(userHandle),
-                    },
-                }),
+                msg,
                 function (data) {
                     return data
                 },
-                'json')
+                'json'
+            )
         })
         .then((success) => {
             alert("successfully logged in " + username + "!");
         })
         .catch((error) => {
             console.log(error);
-            alert("failed to register " + username);
+            let err = JSON.parse(error.responseText);
+            console.log(err);
+            alert("failed to register '" + username + "'. \n error : " + err.error.message)
         })
     }
 }
