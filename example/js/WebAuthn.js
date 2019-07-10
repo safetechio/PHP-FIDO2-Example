@@ -25,6 +25,7 @@ class SAFETECHioWebAuthn {
 
     constructor(config) {
         this.config = config;
+        window.localStorage.setItem("SAFETECHioWebAuthn", "")
     }
 
     // Base64 to ArrayBuffer
