@@ -1,6 +1,6 @@
 # SAFETECHio PHP FIDO2 Example
 
-![Example Home Page](./docs/images/home-page_.png "Example Home Page")
+![Example Home Page](./docs/images/home-page-.png "Example Home Page")
 
 ## Libraries
 
