@@ -6,18 +6,20 @@ $(document).ready(function () {
     }
 });
 
-
-SAFETECHioWebAuthnConfig = {
-    registerBeginEndpoint: "",
-    registerCompleteEndpoint: "",
-    authenticateBeginEndpoint: "",
-    authenticateCompleteEndpoint: "",
-};
-
-SAFETECHioWebAuthnConfig.registerBeginEndpoint += "RegisterBegin.php?username=";
-SAFETECHioWebAuthnConfig.registerCompleteEndpoint += "RegisterComplete.php?username=";
-SAFETECHioWebAuthnConfig.authenticateBeginEndpoint += "AuthenticateBegin.php?username=";
-SAFETECHioWebAuthnConfig.authenticateCompleteEndpoint += "AuthenticationComplete.php?username=";
+class SAFETECHioWebAuthnConfig {
+    constructor() {
+        this.registerBeginEndpoint = "";
+        this.registerCompleteEndpoint = "";
+        this.authenticateBeginEndpoint = "";
+        this.authenticateCompleteEndpoint = "";
+        this.username = "";
+        this.usernameInputID = "";
+        this.logErrors = true;
+        this.logSuccess = false;
+        this.giveErrorAlert = false;
+        this.giveSuccessAlert = false;
+    }
+}
 
 class SAFETECHioWebAuthn {
 
@@ -38,16 +40,53 @@ class SAFETECHioWebAuthn {
             .replace(/=/g, "");
     }
 
-    registerUser() {
-
-        let username = $("#email").val();
-        if (username === "") {
-            alert("Please enter a username");
-            return;
+    username() {
+        if(this.config.username.length > 0) {
+            return this.config.username;
         }
 
+        if(this.config.usernameInputID.length > 0) {
+            let username = $(this.config.usernameInputID).val();
+            if (username === "") {
+                alert("Please enter a username");
+                throw new Error("missing data: username");
+            }
+            return username;
+        }
+
+        alert("Neither username nor usernameInputID is set. Please set one of these parameters in the config.");
+        throw new Error("missing config parameters: username or usernameInputID");
+    }
+
+    handleError(error, type) {
+        if(this.config.logErrors){
+            console.log(error);
+        }
+
+        let err = JSON.parse(error.responseText);
+
+        if(this.config.logErrors){
+            console.log(err);
+        }
+
+        if(this.config.giveErrorAlert){
+            alert("failed to "+type+" '" + this.username() + "'. \n error : " + err.error.message)
+        }
+    }
+
+    handleSuccess(success, type) {
+        if(this.config.logSuccess) {
+            console.log(success);
+        }
+
+        if(this.config.giveSuccessAlert) {
+            alert("successfully "+type+" " + this.username() + "!");
+        }
+    }
+
+    registerUser() {
         $.get(
-            this.config.registerBeginEndpoint + username,
+            this.config.registerBeginEndpoint + this.username(),
             null,
             function (data) {
                 return data
@@ -85,7 +124,7 @@ class SAFETECHioWebAuthn {
             });
 
             return $.post(
-                this.config.registerCompleteEndpoint + username,
+                this.config.registerCompleteEndpoint + this.username(),
                 msg,
                 function (data) {
                     return data
@@ -94,25 +133,16 @@ class SAFETECHioWebAuthn {
             )
         })
         .then((success) => {
-            alert("successfully registered " + username + "!");
+            this.handleSuccess(success, "registered")
         })
         .catch((error) => {
-            console.log(error);
-            let err = JSON.parse(error.responseText);
-            console.log(err);
-            alert("failed to register '" + username + "'. \n error : " + err.error.message)
+            this.handleError(error, "register");
         })
     }
 
     authenticateUser() {
-        let username = $("#email").val();
-        if (username === "") {
-            alert("Please enter a username");
-            return;
-        }
-
         $.get(
-            this.config.authenticateBeginEndpoint + username,
+            this.config.authenticateBeginEndpoint + this.username(),
             null,
             function (data) {
                 return data
@@ -151,7 +181,7 @@ class SAFETECHioWebAuthn {
             });
 
             return $.post(
-                this.config.authenticateCompleteEndpoint + username,
+                this.config.authenticateCompleteEndpoint + this.username(),
                 msg,
                 function (data) {
                     return data
@@ -160,13 +190,10 @@ class SAFETECHioWebAuthn {
             )
         })
         .then((success) => {
-            alert("successfully logged in " + username + "!");
+            this.handleSuccess(success, "authenticated")
         })
         .catch((error) => {
-            console.log(error);
-            let err = JSON.parse(error.responseText);
-            console.log(err);
-            alert("failed to register '" + username + "'. \n error : " + err.error.message)
+            this.handleError(error, "authenticate")
         })
     }
 }

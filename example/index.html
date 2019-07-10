@@ -50,7 +50,16 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/WebAuthn.js"></script>
 <script>
-    SafeTechWebAuthn = new SAFETECHioWebAuthn(SAFETECHioWebAuthnConfig);
+    config = new SAFETECHioWebAuthnConfig();
+    config.registerBeginEndpoint += "RegisterBegin.php?username=";
+    config.registerCompleteEndpoint += "RegisterComplete.php?username=";
+    config.authenticateBeginEndpoint += "AuthenticateBegin.php?username=";
+    config.authenticateCompleteEndpoint += "AuthenticationComplete.php?username=";
+    config.usernameInputID = "#email";
+    config.giveErrorAlert = true;
+    config.giveSuccessAlert = true;
+
+    SafeTechWebAuthn = new SAFETECHioWebAuthn(config);
 </script>
 
 </body>
