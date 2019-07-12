@@ -22,6 +22,8 @@ Open another separate terminal and enter the following commands
 docker exec -it fido2-example /bin/bash
 cd app
 composer install
+npm install
+npm run build
 ```
 
 After the installation of the packages dependencies has been completed navigate to the following URL
