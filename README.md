@@ -4,7 +4,10 @@
 
 ## Libraries
 
-For details of the source libraries see [dedicated repo](https://github.com/SAFETECHio/FIDO2_SERVER_Libraries).
+For details of the source libraries see:
+ 
+- [Server side repo](https://github.com/SAFETECHio/FIDO2_SERVER_Libraries)
+- [Client side repo](https://github.com/SAFETECHio/FIDO2_CLIENT_Libraries)
 
 ## Getting Started
 
