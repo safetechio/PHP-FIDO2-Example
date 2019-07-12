@@ -27,10 +27,10 @@ composer install
 After the installation of the packages dependencies has been completed navigate to the following URL
 
 ```text
-http://localhost:8082/example/
+http://localhost:8082/dist/
 ```
 
-Or click here [http://localhost:8082/example/](http://localhost:8082/example/).
+Or click here [http://localhost:8082/dist/](http://localhost:8082/dist/).
 
 ## Browser Compatibility
 

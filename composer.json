@@ -8,7 +8,7 @@
     }
   ],
   "autoload": {
-    "psr-4": {"": "./example"}
+    "psr-4": {"": "./backend"}
   },
   "require": {
     "SAFETECHio/FIDO2_SERVER_Libraries": "dev-master",
