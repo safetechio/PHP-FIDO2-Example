@@ -34,7 +34,7 @@ Or click here [http://localhost:8082/dist/](http://localhost:8082/dist/).
 
 ## Browser Compatibility
 
-To get the latest details of which version of which browsers offer support for WebAuthn please visit [Can I User WebAuthn](https://caniuse.com/#search=webauthn). As of writing (2019-06-28) the following browsers have support:
+To get the latest details of which version of which browsers offer support for WebAuthn please visit [Can I Use WebAuthn](https://caniuse.com/#search=webauthn). As of writing (2019-06-28) the following browsers have support:
 
 ![WebAuthn Browser Compatibility](./docs/images/can-I-use-webauthn.png "WebAuthn Browser Compatibility")
 
