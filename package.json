@@ -1,0 +1,35 @@
+{
+  "name": "FIDO2_example",
+  "version": "1.0.0",
+  "description": "![Example Home Page](./docs/images/home-page-.png \"Example Home Page\")",
+  "private": true,
+  "directories": {
+    "doc": "docs",
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build frontend/index.html --global tech --public-url ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SAFETECHio/PHP-FIDO2-Example.git"
+  },
+  "keywords": [
+    ""
+  ],
+  "author": "Samuel Hawksby-Robinson <samuel@samyoul.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SAFETECHio/PHP-FIDO2-Example/issues"
+  },
+  "homepage": "https://github.com/SAFETECHio/PHP-FIDO2-Example#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.3",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.5"
+  },
+  "dependencies": {
+    "fido2_clientside": "git+https://github.com/SAFETECHio/FIDO2_CLIENT_Libraries.git"
+  }
+}
