@@ -40,29 +40,16 @@
                 <input class="form-control" type="text" name="username" id="email" placeholder="i.e. name@example.com">
             </div>
             <div class="col-md-2">
-                <button class="btn btn-primary btn-block" onclick="SafeTechWebAuthn.registerUser()">Register</button>
+                <button class="btn btn-primary btn-block" onclick="tech.SafeTechWebAuthn.registerUser()">Register</button>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-success btn-block"  onclick="SafeTechWebAuthn.authenticateUser()">Authenticate</button>
+                <button class="btn btn-success btn-block"  onclick="tech.SafeTechWebAuthn.authenticateUser()">Authenticate</button>
             </div>
         </div>
     </div>
 </div>
 
-<script src="js/jquery.min.js"></script>
-<script src="js/WebAuthn.js"></script>
-<script>
-    config = new SAFETECHioWebAuthnConfig();
-    config.registerBeginEndpoint += "RegisterBegin.php?username=";
-    config.registerCompleteEndpoint += "RegisterComplete.php?username=";
-    config.authenticateBeginEndpoint += "AuthenticateBegin.php?username=";
-    config.authenticateCompleteEndpoint += "AuthenticationComplete.php?username=";
-    config.usernameInputID = "#email";
-    config.giveErrorAlert = true;
-    config.giveSuccessAlert = true;
-
-    SafeTechWebAuthn = new SAFETECHioWebAuthn(config);
-</script>
+<script src="main.js"></script>
 
 </body>
 </html>
