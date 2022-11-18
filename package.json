@@ -27,7 +27,7 @@
   "devDependencies": {
     "parcel-bundler": "^1.12.3",
     "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.5"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "fido2_clientside": "git+https://github.com/SAFETECHio/FIDO2_CLIENT_Libraries.git"
